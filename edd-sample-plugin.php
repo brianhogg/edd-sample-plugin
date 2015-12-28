@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Sample Plugin
-Plugin URI: http://pippinsplugins.com/
+Plugin URI: http://brianhogg.com/
 Description: Illustrates how to include an updater in your plugin for EDD Software Licensing
 Author: Pippin Williamson, Brian Hogg
 Author URI: http://pippinsplugins.com
@@ -53,9 +53,9 @@ $edd_vars = array(
 	// The plugin settings admin page slug
     'admin_page_slug' => 'edd-sample',
 
-    // If using add_admin_page, this is the parent slug.
-    // Otherwise you'll need to change how the settings plugin adds the settings page.
-    'parent_menu_slug' => 'edd-sample-parent',
+    // If using add_menu_page, this is the parent slug to add a submenu item underneath.
+    // Otherwise we'll add our own parent menu item.
+    'parent_menu_slug' => '',
 
     // The translatable title of the plugin
     'plugin_title' => __( 'Sample Plugin', 'edd-sample' ),
@@ -76,7 +76,9 @@ if ( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
     include( dirname( __FILE__ ) . '/edd/EDD_SL_Plugin_Updater.php' );
 }
 
-require_once( dirname( __FILE__ ) . '/edd/edd.php' );
+// You should rename the class in edd/edd.php and modify this to avoid any conflicts
+if ( !class_exists( 'EDD_Sample_Plugin' ) )
+	require_once( dirname( __FILE__ ) . '/edd/edd.php' );
 
 // Kick off our EDD class
-new EDD_ECN_Plugin( $edd_vars );
+new EDD_Sample_Plugin( $edd_vars );
